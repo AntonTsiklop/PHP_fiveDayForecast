@@ -1,7 +1,12 @@
 <?php
 
+$ch = curl_init('http://ip-api.com/json/');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$res = json_decode(curl_exec($ch));
+curl_close($ch);
+
+$city = $res -> city;
 $apiKey = "d7ee1ab7adb1d5b009a10988baf0bd59";
-$city = "Yalta";
 $url = "http://api.openweathermap.org/data/2.5/forecast?q=" . $city . "&cnt&lang=ru&units=metric&appid=" . $apiKey;
 
 $ch = curl_init($url); //создание запроса
