@@ -1,6 +1,23 @@
 <?php
 
-$ch = curl_init('http://ip-api.com/json/');
+function getIp()
+{
+    $keys = [
+        'HTTP_CLIENT_IP',
+        'HTTP_X_FORWARDED_FOR',
+        'REMOTE_ADDR'
+    ];
+    foreach ($keys as $key) {
+        if (!empty($_SERVER[$key])) {
+            return $_SERVER[$key];
+        }
+    }
+}
+
+$ip = getIp();
+
+
+$ch = curl_init('http://ip-api.com/json/'. $ip);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $res = json_decode(curl_exec($ch));
 curl_close($ch);
